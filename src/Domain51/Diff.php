@@ -20,13 +20,8 @@ class Domain51_Diff
         $expected_len = $this->_expected_len + 1;
         $this->_actual_len = count($actual);
         $actual_len = $this->_actual_len + 1;
-
-        for ($i = 0; $i < $expected_len; $i++) {
-            $this->matrix[$i] = array(0);
-        }
-        for ($i = 0; $i < $actual_len; $i++) {
-            $this->matrix[0][$i] = 0;
-        }
+        
+        $this->_initializeMatrix();
 
         for ($expected_cursor = 1; $expected_cursor < $expected_len; $expected_cursor++) {
             for ($actual_cursor = 1; $actual_cursor < $actual_len; $actual_cursor++) {
@@ -42,6 +37,19 @@ class Domain51_Diff
     public function __toString()
     {
         return $this->_printDiff(count($this->_expected), count($this->_actual));
+    }
+
+    private function _initializeMatrix()
+    {
+        $xAxis = $this->_expected_len + 1;
+        $yAxis = $this->_actual_len + 1;
+
+        for ($x = 0; $x < $xAxis; $x++) {
+            $this->matrix[$x] = array(0);
+        }
+        for ($y = 0; $y < $yAxis; $y++) {
+            $this->matrix[0][$y] = 0;
+        }
     }
 
     private function _printDiff($i, $j)
